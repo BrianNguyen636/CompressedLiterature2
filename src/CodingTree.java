@@ -74,7 +74,7 @@ public class CodingTree {
             queue.add(new Node(c,freqMap.get(c)));
         }
     }
-    //EDIT NEEDED
+    //EDIT NEEDED TO HASH TABLE
     private void frequencyCount(String message) {
         freqMap = new HashMap<>();
         for (int i = 0; i < message.length(); i++) {
