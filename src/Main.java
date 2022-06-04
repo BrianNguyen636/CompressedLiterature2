@@ -69,5 +69,11 @@ public class Main {
         hashTable.put("Robot", "Roboco");
         System.out.println(hashTable);
         System.out.println("Value of Robot:" + hashTable.get("Robot"));
+        hashTable.put("Tako", "Ina");
+        System.out.println(hashTable);
+
+//        System.out.println("Adding Orca, same hash as Tako");
+//        hashTable.put("Orca", "Chloe");
+//        System.out.println(hashTable);
     }
 }
