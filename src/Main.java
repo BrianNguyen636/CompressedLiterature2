@@ -1,7 +1,6 @@
 import java.io.*;
 import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
-import java.util.Hashtable;
 
 /**
 @author Brian Nguyen
@@ -79,9 +78,5 @@ public class Main {
         hashTable.put("Duck", "Subaru");
         System.out.println(hashTable);
         hashTable.stats();
-
-//        System.out.println("Adding Orca, same hash as Tako");
-//        hashTable.put("Orca", "Chloe");
-//        System.out.println(hashTable);
     }
 }
