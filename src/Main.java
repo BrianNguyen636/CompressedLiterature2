@@ -1,6 +1,7 @@
 import java.io.*;
 import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
+import java.util.Hashtable;
 
 /*
 @Author Brian Nguyen
@@ -58,18 +59,21 @@ public class Main {
     public static void testMyHashTable() {
         MyHashTable<String, String> hashTable = new MyHashTable<>(10);
         System.out.println(hashTable);
-        hashTable.put("Sheep", "Watame");
+        hashTable.put("Sheep", "Tsunomaki");
         System.out.println(hashTable);
         System.out.println("Contains sheep: " +  hashTable.containsKey("Sheep"));
-        System.out.println("Changing sheep to tsunomaki");
-        hashTable.put("Sheep", "Tsunomaki");
+        System.out.println("Changing sheep to Watame");
+        hashTable.put("Sheep", "Watame");
         System.out.println(hashTable);
         System.out.println("Adding robot");
         hashTable.put("Robot", "Roboco");
         System.out.println(hashTable);
-        System.out.println("Value of Robot:" + hashTable.get("Robot"));
+        System.out.println("Value of Robot: " + hashTable.get("Robot"));
         hashTable.put("Tako", "Ina");
         System.out.println(hashTable);
+        hashTable.put("Duck", "Subaru");
+        System.out.println(hashTable);
+        hashTable.stats();
 
 //        System.out.println("Adding Orca, same hash as Tako");
 //        hashTable.put("Orca", "Chloe");
