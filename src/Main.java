@@ -65,6 +65,7 @@ public class Main {
         System.out.println("Changing sheep to tsunomaki");
         hashTable.put("Sheep", "Tsunomaki");
         System.out.println(hashTable);
+        System.out.println("Adding robot");
         hashTable.put("Robot", "Roboco");
         System.out.println(hashTable);
         System.out.println("Value of Robot:" + hashTable.get("Robot"));
