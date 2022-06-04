@@ -60,8 +60,7 @@ public class Main {
         System.out.println(hashTable);
         hashTable.put("Sheep", "Watame");
         System.out.println(hashTable);
-        boolean testBool = hashTable.containsKey("Sheep");
-        System.out.println("Contains sheep: " + testBool);
+        System.out.println("Contains sheep: " +  hashTable.containsKey("Sheep"));
         System.out.println("Changing sheep to tsunomaki");
         hashTable.put("Sheep", "Tsunomaki");
         System.out.println(hashTable);
