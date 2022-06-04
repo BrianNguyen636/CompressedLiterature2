@@ -46,16 +46,16 @@ public class CodingTree {
     Recursive function, if left and right are null, then map code to character.
      */
     private void mapCodes(Node current, String code) {
-        if (current.left == null && current.right == null) {
-            codes.put(current.character, code);
-        } else {
-            if (current.left != null) {
-                mapCodes(current.left, code + "0");
-            }
-            if (current.right != null) {
-                mapCodes(current.right, code + "1");
-            }
-        }
+//        if (current.left == null && current.right == null) {
+//            codes.put(current.character, code);
+//        } else {
+//            if (current.left != null) {
+//                mapCodes(current.left, code + "0");
+//            }
+//            if (current.right != null) {
+//                mapCodes(current.right, code + "1");
+//            }
+//        }
     }
     private void mergeTrees() {
         while (queue.size() != 1) {
@@ -69,10 +69,10 @@ public class CodingTree {
     }
 
     private void populateQueue() {
-        queue = new PriorityQueue<>(freqMap.size(), new AscendingComparator());
-        for (Character c : freqMap.keySet()) {
-            queue.add(new Node(c,freqMap.get(c)));
-        }
+//        queue = new PriorityQueue<>(freqMap.size(), new AscendingComparator());
+//        for (Character c : freqMap.keySet()) {
+//            queue.add(new Node(c,freqMap.get(c)));
+//        }
     }
     //EDIT NEEDED TO HASH TABLE
     private void frequencyCount(String message) {
