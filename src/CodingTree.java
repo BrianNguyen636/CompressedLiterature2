@@ -1,12 +1,13 @@
 import java.util.*;
-/*
-@Author Brian Nguyen
+/**
+@author Brian Nguyen
  */
 public class CodingTree {
-    Map<String, String> codes = new HashMap<>();
+    MyHashTable<String, String> codes = new MyHashTable<>(32768);
     List<Byte> bits = new ArrayList<>();
     PriorityQueue<Node> queue;
-    Map<Character, Integer> freqMap;
+    MyHashTable<String, Integer> freqTable;
+    static final String characterSet = "0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz'-";
 
     public CodingTree(String message) {
 
@@ -22,15 +23,29 @@ public class CodingTree {
 
         BitSet bitset = new BitSet();
         int x = 0;
+        StringBuilder s = new StringBuilder();
         for (int i = 0; i < message.length(); i++) {
-            Character c = message.charAt(i);
+            char c = message.charAt(i);
 
-            String codeString = codes.get(c);
+            if (characterSet.contains(String.valueOf(c))) {
+                s.append(c);
+            } else {
+                if (s.length() > 0) {
+                    String word = String.valueOf(s);
+                    String codeString = codes.get(word);
+                    for (int j = 0; j < codeString.length(); j++) {
+                        bitset.set(x + j, codeString.charAt(j) != '0');
+                    }
+                    x += codeString.length();
+                    s = new StringBuilder();
+                }
 
-            for (int j = 0; j < codeString.length(); j++) {
-                bitset.set(x + j, codeString.charAt(j) != '0');
+                String codeString = codes.get(String.valueOf(c));
+                for (int j = 0; j < codeString.length(); j++) {
+                    bitset.set(x + j, codeString.charAt(j) != '0');
+                }
+                x += codeString.length();
             }
-            x += codeString.length();
         }
         byte[] bitArray = bitset.toByteArray();
         for (byte b : bitArray) {
@@ -46,16 +61,16 @@ public class CodingTree {
     Recursive function, if left and right are null, then map code to character.
      */
     private void mapCodes(Node current, String code) {
-//        if (current.left == null && current.right == null) {
-//            codes.put(current.character, code);
-//        } else {
-//            if (current.left != null) {
-//                mapCodes(current.left, code + "0");
-//            }
-//            if (current.right != null) {
-//                mapCodes(current.right, code + "1");
-//            }
-//        }
+        if (current.left == null && current.right == null) {
+            codes.put(current.word, code);
+        } else {
+            if (current.left != null) {
+                mapCodes(current.left, code + "0");
+            }
+            if (current.right != null) {
+                mapCodes(current.right, code + "1");
+            }
+        }
     }
     private void mergeTrees() {
         while (queue.size() != 1) {
@@ -69,20 +84,33 @@ public class CodingTree {
     }
 
     private void populateQueue() {
-//        queue = new PriorityQueue<>(freqMap.size(), new AscendingComparator());
-//        for (Character c : freqMap.keySet()) {
-//            queue.add(new Node(c,freqMap.get(c)));
-//        }
+        queue = new PriorityQueue<>(freqTable.buckets, new AscendingComparator());
+        for (int i = 0; i < freqTable.buckets; i++) {
+            if (freqTable.bucketList.get(i) != null) {
+                queue.add(new Node(freqTable.bucketList.get(i).key, freqTable.bucketList.get(i).value));
+            }
+        }
     }
-    //EDIT NEEDED TO HASH TABLE
     private void frequencyCount(String message) {
-        freqMap = new HashMap<>();
+        freqTable = new MyHashTable<>(32768);
+        StringBuilder s = new StringBuilder();
         for (int i = 0; i < message.length(); i++) {
-            Character c = message.charAt(i);
-            if (!freqMap.containsKey(c)) {
-                freqMap.put(c, 1);
+            String c = String.valueOf(message.charAt(i));
+
+            if (characterSet.contains(c)) {
+                s.append(c);
             } else {
-                freqMap.put(c, freqMap.get(c) + 1);
+                if (s.length() > 0) {
+
+                    String word = String.valueOf(s);
+                    if (freqTable.containsKey(word)) {
+                        freqTable.put(word, freqTable.get(word) + 1);
+                    } else freqTable.put(word, 1);
+                    s = new StringBuilder();
+                }
+                if (freqTable.containsKey(c)) {
+                    freqTable.put(c, freqTable.get(c) + 1);
+                } else freqTable.put(c, 1);
             }
         }
     }

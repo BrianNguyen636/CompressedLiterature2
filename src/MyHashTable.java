@@ -1,4 +1,7 @@
 import java.util.ArrayList;
+/**
+@author Brian Nguyen
+ */
 
 public class MyHashTable<K, V> {
     ArrayList<Bucket<K,V>> bucketList;
@@ -14,7 +17,7 @@ public class MyHashTable<K, V> {
         }
         entries = 0;
     }
-    void mapProbe(int probeCount) {
+    private void mapProbe(int probeCount) {
         if (probeCount + 1 > probes.size()) {
             while (probeCount + 1 > probes.size()) {
                 probes.add(0);
@@ -25,22 +28,22 @@ public class MyHashTable<K, V> {
 
     void put(K searchKey, V newValue) {
         int hashCode = hash(searchKey);
-        int probeCount = 0;
+
         //update or add the newValue to the bucket hash(searchKey)
         //if hash(key) is full use linear probing to find the next available bucket
 
         while (bucketList.get(hashCode) != null) {
             if (bucketList.get(hashCode).key.equals(searchKey)) {
                 bucketList.get(hashCode).value = newValue;
-                mapProbe(probeCount);
+
                 return;
             }
             hashCode++;
-            probeCount++;
+
         }
         bucketList.set(hashCode, new Bucket<>(searchKey, newValue));
         entries++;
-        mapProbe(probeCount);
+
     }
     V get(K searchKey) {
         //return a value for the specified key from the bucket hash(searchKey)
@@ -67,17 +70,21 @@ public class MyHashTable<K, V> {
         int hashCode = hash(searchKey);
         //return true if there is a value stored for searchKey
 
-        if (bucketList.get(hashCode).key.equals(searchKey)) {
-            return true;
-        } else {
-            while (hashCode < buckets) {
-                hashCode++;
-                if (bucketList.get(hashCode).key.equals(searchKey)) {
-                    return true;
+        if (bucketList.get(hashCode) != null) {
+            if (bucketList.get(hashCode).key.equals(searchKey)) {
+                return true;
+            } else {
+                while (hashCode < buckets - 1) {
+                    hashCode++;
+                    if (bucketList.get(hashCode) != null) {
+                        if (bucketList.get(hashCode).key.equals(searchKey)) {
+                            return true;
+                        }
+                    }
                 }
+                return false;
             }
-            return false;
-        }
+        } else return false;
     }
     void stats() {
         System.out.println("Hash Table Stats");
@@ -107,7 +114,7 @@ public class MyHashTable<K, V> {
         int index = 0;
         for (Bucket b : bucketList) {
             if (b != null) {
-                String str = "[" + index + "] Key: " + b.key + " | Value: " + b.value + "\n";
+                String str = "[" + index + "] Key: '" + b.key + "' | Value: " + b.value + "\n";
                 string.append(str);
             }
             index++;
