@@ -114,7 +114,7 @@ public class MyHashTable<K, V> {
         int index = 0;
         for (Bucket b : bucketList) {
             if (b != null) {
-                String str = "[" + index + "] Key: '" + b.key + "' | Value: " + b.value + "\n";
+                String str = "[" + index + "] Key: \"" + b.key + "\"  Value: " + b.value + "\n";
                 string.append(str);
             }
             index++;
